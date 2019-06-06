@@ -7,7 +7,7 @@ package memory;
 
 /**
  *
- * @author Theo
+ * @author Theo tessst
  */
 public class Memory {
 
