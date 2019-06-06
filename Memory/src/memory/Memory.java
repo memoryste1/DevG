@@ -7,7 +7,7 @@ package memory;
 
 /**
  *
- * @author Theo tessst
+ * @author Slyvain
  */
 public class Memory {
 
@@ -16,7 +16,7 @@ public class Memory {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        salut sylvain
-    }
+        salut théo comment va tu
+                
     
 }
