@@ -16,7 +16,5 @@ public class Memory {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        salut théo comment va tu
-                
-    
+                    
 }
