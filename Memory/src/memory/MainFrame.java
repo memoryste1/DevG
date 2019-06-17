@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.HashMap;
+import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -22,19 +23,26 @@ public class MainFrame extends javax.swing.JFrame {
     HashMap<String, String> map = new HashMap<String, String>();
 
     /**
-     * *
+     * load pictures in hashmap
      * @author Théo
      */
     public void loadPictures(int numberOfCard) {
         
         for (int i = 0; i < numberOfCard; i++) {
             
+            Random rand = new Random();
+
+            // Obtain a number between [0 - numberOfCard-1 ].
+            int n = rand.nextInt(numberOfCard);
+            
+            
+            
             //put a String in hashmap(composition: Numéro i) where i is the hashmap's size
             int mapSize = map.size();
             String text = "Numéro " + i;
             map.put(String.valueOf(mapSize), text);
-        }
-    }
+        }//End for
+    }//end loadPictures
 
     /**
      * Creates new form MainFrame
