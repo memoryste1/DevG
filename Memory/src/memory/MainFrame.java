@@ -8,6 +8,8 @@ package memory;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Random;
 import javax.swing.JButton;
@@ -48,39 +50,50 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     public MainFrame() {
-        int rows = 4;
-        int cols = 1;
-        int hgap = 0;
-        int vgap = 0;
+       int lastCard = 0;
+      int rows = 4;
+      int cols = 1;
+      int cardNumber = 10;
+      int vgap = 0;
 
-        this.setLayout(new BorderLayout());
+      this.setLayout(new BorderLayout());
 
-        GridLayout GridMemory = new GridLayout(rows, cols);
+      GridLayout GridMemory = new GridLayout(rows, cols);
 
-        pnlGrid = new JPanel();
-        pnlConf = new JPanel();
+      pnlGrid = new JPanel();
+      pnlConf = new JPanel();
 
-        this.add(pnlConf, BorderLayout.SOUTH);
-        this.add(pnlGrid, BorderLayout.CENTER);
-        this.setBounds(100, 100, 800, 600);
-        pnlGrid.setLayout(GridMemory);
+      this.add(pnlConf, BorderLayout.SOUTH);
+      this.add(pnlGrid, BorderLayout.CENTER);
+      this.setBounds(100, 100, 800, 600);
+      pnlGrid.setLayout(GridMemory);
 
-        //this.setContentPane(pnlMemory);
-        pnlGrid.add(new JButton("1"));
-        pnlGrid.add(new JButton("2"));
-        pnlConf.add(new JButton("Calculer"));
-        pnlConf.setLayout(new FlowLayout(FlowLayout.LEFT));
-        pnlGrid.add(new JButton("4"));
-        pnlGrid.add(new JButton("4"));
-        pnlGrid.add(new JButton("4"));
-        pnlGrid.add(new JButton("4"));
-        pnlGrid.add(new JButton("4"));
-        pnlGrid.add(new JButton("4"));
-        pnlGrid.add(new JButton("4"));
-        pnlGrid.add(new JButton("4"));
-        pnlGrid.add(new JButton("4"));
+      //this.setContentPane(pnlMemory);
+      pnlConf.setLayout(new FlowLayout(FlowLayout.LEFT));
+      Random rand = new Random();
+      
+      BtnListener listener = new BtnListener();
+      JButton currentBtn;
+      for (int i = 0; i < cardNumber * 2; i++) {
+         currentBtn = new JButton("");
+         currentBtn.addActionListener(listener);
+         currentBtn.setName(String.valueOf(i));
+         pnlGrid.add(currentBtn);
+         
+      }
+      pnlConf.add(new JButton("Mélanger"));
 
-    }
+   }
+
+   class BtnListener implements ActionListener {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+         
+         System.out.println(((JButton)e.getSource()).getName());
+      }
+   }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
