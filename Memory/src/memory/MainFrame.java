@@ -91,6 +91,7 @@ public class MainFrame extends javax.swing.JFrame {
       public void actionPerformed(ActionEvent e) {
          
          System.out.println(((JButton)e.getSource()).getName());
+         //je comprends pas
       }
    }
 
