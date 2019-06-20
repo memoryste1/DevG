@@ -29,16 +29,36 @@ public class MainFrame extends javax.swing.JFrame {
      * @author Théo
      */
     public void loadPictures(int numberOfCard) {
-        
+       
         for (int i = 0; i < numberOfCard; i++) {
+            //temp
             
+            
+            
+            
+            
+            //asdxjhnajsmncdja
+            
+            
+            //njsdjacmn
+            
+            //kjasdcklsokljd
             Random rand = new Random();
+            boolean flag;
+            do {
+                 flag = true;
+                
+                // Obtain a number between [0 - numberOfCard-1 ].
+                int n = rand.nextInt(numberOfCard);
+                
+                //Check if an object with id n is in hashmap
+                try {
+                    map.get(n);
+                } catch (Exception e) {
+                    flag = false;
+                }
+            } while (flag != true);
 
-            // Obtain a number between [0 - numberOfCard-1 ].
-            int n = rand.nextInt(numberOfCard);
-            
-            
-            
             //put a String in hashmap(composition: Numéro i) where i is the hashmap's size
             int mapSize = map.size();
             String text = "Numéro " + i;
