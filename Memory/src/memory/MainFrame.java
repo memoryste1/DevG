@@ -24,37 +24,34 @@ public class MainFrame extends javax.swing.JFrame {
     //Hash map of number
     HashMap<String, String> map = new HashMap<String, String>();
 
+    //Get the hashmap first clicked card's key
+    String firstCardkey = "";
+
     /**
      * load pictures in hashmap
+     *
      * @author Théo
      */
     public void loadPictures(int numberOfCard) {
-       
-        for (int i = 0; i < numberOfCard*2; i++) {
-            
-            Random rand = new Random();
-            boolean flag;
-            int n;
-            for(int j = 0; j<2; j++){
-               do {
+        Random rand = new Random();
+        boolean flag;
+        int n;
+
+        for (int i = 0; i < numberOfCard; i++) {
+            for (int j = 0; j < 2; j++) {
+                do {
                     flag = true;
 
-                     // Obtain a number between [0 - numberOfCard-1 ].
-                     n = rand.nextInt(numberOfCard*2);
+                    // Obtain a number between [0 - numberOfCard-1 ].
+                    n = rand.nextInt(numberOfCard * 2);
+                    boolean m = map.containsKey(String.valueOf(n));
+                    if (map.containsKey(String.valueOf(n))) {
+                        flag = false;
+                    }
+                } while (flag != true);
 
-                     //Check if an object with id n is in hashmap
-                     try {
-                         map.get(n);
-                     } catch (Exception e) {
-                         flag = false;
-                     }
-               } while (flag != true);
-            
-
-
-            
-               String text = "Numéro " + i;
-               map.put(String.valueOf(n), text);
+                String text = "Numéro " + i;
+                map.put(String.valueOf(n), text);
             }
         }//End for
     }//end loadPictures
@@ -63,51 +60,66 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     public MainFrame() {
-       int lastCard = 0;
-      int rows = 4;
-      int cols = 1;
-      int cardNumber = 2;
-      int vgap = 0;
+        int lastCard = 0;
+        int rows = 4;
+        int cols = 1;
+        int cardNumber = 2;
+        int vgap = 0;
 
-      this.setLayout(new BorderLayout());
-       loadPictures(cardNumber);
-      GridLayout GridMemory = new GridLayout(rows, cols);
+        this.setLayout(new BorderLayout());
+        loadPictures(cardNumber);
+        GridLayout GridMemory = new GridLayout(rows, cols);
 
-      pnlGrid = new JPanel();
-      pnlConf = new JPanel();
+        pnlGrid = new JPanel();
+        pnlConf = new JPanel();
 
-      this.add(pnlConf, BorderLayout.SOUTH);
-      this.add(pnlGrid, BorderLayout.CENTER);
-      this.setBounds(100, 100, 800, 600);
-      pnlGrid.setLayout(GridMemory);
+        this.add(pnlConf, BorderLayout.SOUTH);
+        this.add(pnlGrid, BorderLayout.CENTER);
+        this.setBounds(100, 100, 800, 600);
+        pnlGrid.setLayout(GridMemory);
 
-      //this.setContentPane(pnlMemory);
-      pnlConf.setLayout(new FlowLayout(FlowLayout.LEFT));
-      Random rand = new Random();
-      
-      BtnListener listener = new BtnListener();
-      JButton currentBtn;
-      for (int i = 0; i < cardNumber * 2; i++) {
-         currentBtn = new JButton("");
-         currentBtn.addActionListener(listener);
-         currentBtn.setName(String.valueOf(i));
-         pnlGrid.add(currentBtn);
-         
-      }
-      pnlConf.add(new JButton("Mélanger"));
+        //this.setContentPane(pnlMemory);
+        pnlConf.setLayout(new FlowLayout(FlowLayout.LEFT));
+        Random rand = new Random();
 
-   }
+        BtnListener listener = new BtnListener();
+        JButton currentBtn;
+        for (int i = 0; i < cardNumber * 2; i++) {
+            currentBtn = new JButton("");
+            currentBtn.addActionListener(listener);
+            currentBtn.setName(String.valueOf(i));
+            pnlGrid.add(currentBtn);
 
-   class BtnListener implements ActionListener {
+        }
+        pnlConf.add(new JButton("Mélanger"));
 
-      @Override
-      public void actionPerformed(ActionEvent e) {
-         
-         System.out.println(((JButton)e.getSource()).getName());
-         //je comprends pas
-      }
-   }
+    }
 
+    class BtnListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            System.out.println(((JButton) e.getSource()).getName());
+
+            if (firstCardkey == "") {
+                firstCardkey = ((JButton) e.getSource()).getName();
+                ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
+                ((JButton) e.getSource()).setEnabled(false);
+            } else {
+
+                //If the first and second button are same
+                if (map.get(firstCardkey).equals(map.get(((JButton) e.getSource()).getName()))) {
+                    ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
+                    ((JButton) e.getSource()).setEnabled(false);
+                } else {
+                    ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
+
+                }
+
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,37 +127,37 @@ public class MainFrame extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-   // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-   private void initComponents() {
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
 
-      panel1 = new java.awt.Panel();
+        panel1 = new java.awt.Panel();
 
-      javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
-      panel1.setLayout(panel1Layout);
-      panel1Layout.setHorizontalGroup(
-         panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGap(0, 100, Short.MAX_VALUE)
-      );
-      panel1Layout.setVerticalGroup(
-         panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGap(0, 100, Short.MAX_VALUE)
-      );
+        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
+        panel1.setLayout(panel1Layout);
+        panel1Layout.setHorizontalGroup(
+                panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panel1Layout.setVerticalGroup(
+                panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 100, Short.MAX_VALUE)
+        );
 
-      setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-      javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-      getContentPane().setLayout(layout);
-      layout.setHorizontalGroup(
-         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGap(0, 683, Short.MAX_VALUE)
-      );
-      layout.setVerticalGroup(
-         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGap(0, 426, Short.MAX_VALUE)
-      );
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 683, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 426, Short.MAX_VALUE)
+        );
 
-      pack();
-   }// </editor-fold>                        
+        pack();
+    }// </editor-fold>                        
 
     /**
      * @param args the command line arguments
@@ -183,9 +195,9 @@ public class MainFrame extends javax.swing.JFrame {
         });
     }
 
-   // Variables declaration - do not modify                     
-   private java.awt.Panel panel1;
-   // End of variables declaration                   
-   private JPanel pnlGrid;
+    // Variables declaration - do not modify                     
+    private java.awt.Panel panel1;
+    // End of variables declaration                   
+    private JPanel pnlGrid;
     private JPanel pnlConf;
 }
