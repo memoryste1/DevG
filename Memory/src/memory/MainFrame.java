@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import java.util.Timer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -114,7 +117,13 @@ public class MainFrame extends javax.swing.JFrame {
                     ((JButton) e.getSource()).setEnabled(false);
                 } else {
                     ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
-
+                    try { 
+                        Thread.sleep(2 * 1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    ((JButton) e.getSource()).setText("");
+                    (pnlGrid.);
                 }
 
             }
