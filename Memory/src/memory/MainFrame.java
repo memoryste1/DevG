@@ -29,7 +29,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     //Get the hashmap first clicked card's key
     String firstCardkey = "";
-
+    ActionEvent firstTouchedButton;
     /**
      * load pictures in hashmap
      *
@@ -109,6 +109,7 @@ public class MainFrame extends javax.swing.JFrame {
                 firstCardkey = ((JButton) e.getSource()).getName();
                 ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
                 ((JButton) e.getSource()).setEnabled(false);
+                firstTouchedButton = e;
             } else {
 
                 //If the first and second button are same
@@ -123,7 +124,9 @@ public class MainFrame extends javax.swing.JFrame {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     ((JButton) e.getSource()).setText("");
-                    (pnlGrid.);
+                     ((JButton) e.getSource()).setEnabled(true);
+                    ((JButton) firstTouchedButton.getSource()).setText("");
+                    ((JButton) firstTouchedButton.getSource()).setEnabled(true);
                 }
 
             }
