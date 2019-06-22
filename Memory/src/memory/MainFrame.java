@@ -30,6 +30,7 @@ public class MainFrame extends javax.swing.JFrame {
     //Get the hashmap first clicked card's key
     String firstCardkey = "";
     ActionEvent firstTouchedButton;
+
     /**
      * load pictures in hashmap
      *
@@ -103,35 +104,54 @@ public class MainFrame extends javax.swing.JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            //Display pressed button's name in output console
             System.out.println(((JButton) e.getSource()).getName());
 
+            // if the pressed button is the first one then:
             if (firstCardkey == "") {
-                firstCardkey = ((JButton) e.getSource()).getName();
-                ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
-                ((JButton) e.getSource()).setEnabled(false);
-                firstTouchedButton = e;
-            } else {
 
-                //If the first and second button are same
+                //keap the button's name (int in var String)
+                firstCardkey = ((JButton) e.getSource()).getName();
+
+                //Change visible button's text
+                ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
+
+                //Set this button disabled
+                ((JButton) e.getSource()).setEnabled(false);
+
+                //Save the object in firstTouchedButton
+                firstTouchedButton = e;
+            } //Else if the pressed button is the second one then:
+            else {
+
+                //If the first and second button's are same
                 if (map.get(firstCardkey).equals(map.get(((JButton) e.getSource()).getName()))) {
+
+                    //Set second button visible and disabled it
                     ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
                     ((JButton) e.getSource()).setEnabled(false);
-                } else {
+                } //Else if the first and second buttons aren't same
+                else {
+
+//NON FO            //Set visible button's text
                     ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
-                    try { 
+
+                    //Pause 2[s]
+                    try {
                         Thread.sleep(2 * 1000);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
+
+                    //Reset button's state
                     ((JButton) e.getSource()).setText("");
-                     ((JButton) e.getSource()).setEnabled(true);
                     ((JButton) firstTouchedButton.getSource()).setText("");
                     ((JButton) firstTouchedButton.getSource()).setEnabled(true);
-                }
-
-            }
-        }
-    }
+                    firstCardkey = "";
+                }//End else
+            }//End if
+        }//End actionPerformed
+    }//End btnListener
 
     /**
      * This method is called from within the constructor to initialize the form.
