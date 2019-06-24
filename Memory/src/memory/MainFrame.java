@@ -130,8 +130,9 @@ public class MainFrame extends javax.swing.JFrame {
         @Override
         @SuppressWarnings("empty-statement")
         public void actionPerformed(ActionEvent e) {
-            
+        if(secondTouchedButton == null){
             timer.stop();
+            
             //Display pressed button's name in output console
             System.out.println(((JButton) e.getSource()).getName());
 
@@ -174,6 +175,7 @@ public class MainFrame extends javax.swing.JFrame {
   
                 }//End else
             }//End if
+        }
         }//End actionPerformed
     }//End btnListener
 
