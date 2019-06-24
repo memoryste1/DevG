@@ -1,7 +1,7 @@
 /*//GEN-LINE:variables
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * and open the template in the editor.yi
  */
 package memory;
 
@@ -19,8 +19,10 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import java.io.*;
 import javafx.animation.Animation;
+import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -37,7 +39,7 @@ public class MainFrame extends javax.swing.JFrame {
     String firstCardkey = "";
     ActionEvent firstTouchedButton;
     ActionEvent secondTouchedButton;
-
+    ImageIcon imageZero = new ImageIcon(getClass().getResource("./nu.png"));
     /**
      * load pictures in hashmap
      *
@@ -61,7 +63,7 @@ public class MainFrame extends javax.swing.JFrame {
                     }
                 } while (flag != true);
 
-                String text = "Numéro " + i;
+                String text = "./" + i + ".png";
                 map.put(String.valueOf(n), text);
             }
         }//End for
@@ -74,7 +76,7 @@ public class MainFrame extends javax.swing.JFrame {
         int lastCard = 0;
         int rows = 4;
         int cols = 1;
-        int cardNumber = 10;
+        int cardNumber = 5;
         int vgap = 0;
         
         timer = new Timer(1000, new TimerListener());
@@ -101,6 +103,7 @@ public class MainFrame extends javax.swing.JFrame {
             currentBtn = new JButton("");
             currentBtn.addActionListener(listener);
             currentBtn.setName(String.valueOf(i));
+            currentBtn.setIcon(imageZero);
             pnlGrid.add(currentBtn);
 
         }
@@ -112,8 +115,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            ((JButton) secondTouchedButton.getSource()).setText("");
-            ((JButton) firstTouchedButton.getSource()).setText("");
+            ((JButton) secondTouchedButton.getSource()).setIcon(imageZero);
+            ((JButton) firstTouchedButton.getSource()).setIcon(imageZero);
             ((JButton) firstTouchedButton.getSource()).setEnabled(true);
             ((JButton) secondTouchedButton.getSource()).setEnabled(true);
             firstCardkey = "";
@@ -142,9 +145,10 @@ public class MainFrame extends javax.swing.JFrame {
 
                 //keap the button's name (int in var String)
                 firstCardkey = ((JButton) e.getSource()).getName();
+                ImageIcon imageForOne = new ImageIcon(getClass().getResource(map.get(firstCardkey)));
 
                 //Change visible button's text
-                ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
+                ((JButton) e.getSource()).setIcon(imageForOne);
 
                 //Set this button disabled
                 ((JButton) e.getSource()).setEnabled(false);
@@ -159,7 +163,10 @@ public class MainFrame extends javax.swing.JFrame {
                 if (map.get(firstCardkey).equals(map.get(((JButton) e.getSource()).getName()))) {
 
                     //Set second button visible and disabled it
-                    ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
+                    ImageIcon imageForOne = new ImageIcon(getClass().getResource(map.get(((JButton) e.getSource()).getName())));
+
+                    //Change visible button's text
+                    ((JButton) e.getSource()).setIcon(imageForOne);
                     ((JButton) e.getSource()).setEnabled(false);
                     firstCardkey = "";
                     firstTouchedButton = null;
@@ -170,7 +177,9 @@ public class MainFrame extends javax.swing.JFrame {
                     if(firstTouchedButton != null){
                     secondTouchedButton = e;
                     }
-                    ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
+                    
+                    ImageIcon temp= new ImageIcon(getClass().getResource(map.get(((JButton) e.getSource()).getName())));
+                    ((JButton) e.getSource()).setIcon(temp);
                     ((JButton) e.getSource()).setEnabled(false);
                     timer.start();
   
