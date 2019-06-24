@@ -76,7 +76,7 @@ public class MainFrame extends javax.swing.JFrame {
         int lastCard = 0;
         int rows = 4;
         int cols = 1;
-        int cardNumber = 5;
+        int cardNumber = 12;
         int vgap = 0;
         
         timer = new Timer(1000, new TimerListener());
@@ -148,7 +148,7 @@ public class MainFrame extends javax.swing.JFrame {
                 ImageIcon imageForOne = new ImageIcon(getClass().getResource(map.get(firstCardkey)));
 
                 //Change visible button's text
-                ((JButton) e.getSource()).setIcon(imageForOne);
+                ((JButton) e.getSource()).setDisabledIcon(imageForOne);
 
                 //Set this button disabled
                 ((JButton) e.getSource()).setEnabled(false);
@@ -166,7 +166,7 @@ public class MainFrame extends javax.swing.JFrame {
                     ImageIcon imageForOne = new ImageIcon(getClass().getResource(map.get(((JButton) e.getSource()).getName())));
 
                     //Change visible button's text
-                    ((JButton) e.getSource()).setIcon(imageForOne);
+                    ((JButton) e.getSource()).setDisabledIcon(imageForOne);
                     ((JButton) e.getSource()).setEnabled(false);
                     firstCardkey = "";
                     firstTouchedButton = null;
@@ -179,7 +179,7 @@ public class MainFrame extends javax.swing.JFrame {
                     }
                     
                     ImageIcon temp= new ImageIcon(getClass().getResource(map.get(((JButton) e.getSource()).getName())));
-                    ((JButton) e.getSource()).setIcon(temp);
+                    ((JButton) e.getSource()).setDisabledIcon(temp);
                     ((JButton) e.getSource()).setEnabled(false);
                     timer.start();
   
