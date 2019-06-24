@@ -10,13 +10,19 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import static java.lang.Runtime.getRuntime;
 import java.util.HashMap;
 import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import java.util.Timer;
+import javax.swing.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.*;
+import javafx.animation.Animation;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -30,6 +36,7 @@ public class MainFrame extends javax.swing.JFrame {
     //Get the hashmap first clicked card's key
     String firstCardkey = "";
     ActionEvent firstTouchedButton;
+    ActionEvent secondTouchedButton;
 
     /**
      * load pictures in hashmap
@@ -67,8 +74,10 @@ public class MainFrame extends javax.swing.JFrame {
         int lastCard = 0;
         int rows = 4;
         int cols = 1;
-        int cardNumber = 2;
+        int cardNumber = 10;
         int vgap = 0;
+        
+        timer = new Timer(1000, new TimerListener());
 
         this.setLayout(new BorderLayout());
         loadPictures(cardNumber);
@@ -99,11 +108,30 @@ public class MainFrame extends javax.swing.JFrame {
 
     }
 
+    class TimerListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            ((JButton) secondTouchedButton.getSource()).setText("");
+            ((JButton) firstTouchedButton.getSource()).setText("");
+            ((JButton) firstTouchedButton.getSource()).setEnabled(true);
+            ((JButton) secondTouchedButton.getSource()).setEnabled(true);
+            firstCardkey = "";
+            secondTouchedButton = null;
+            firstTouchedButton = null;
+        }
+        
+        
+        
+    }
+
     class BtnListener implements ActionListener {
 
         @Override
+        @SuppressWarnings("empty-statement")
         public void actionPerformed(ActionEvent e) {
-
+            
+            timer.stop();
             //Display pressed button's name in output console
             System.out.println(((JButton) e.getSource()).getName());
 
@@ -121,6 +149,7 @@ public class MainFrame extends javax.swing.JFrame {
 
                 //Save the object in firstTouchedButton
                 firstTouchedButton = e;
+                
             } //Else if the pressed button is the second one then:
             else {
 
@@ -130,24 +159,19 @@ public class MainFrame extends javax.swing.JFrame {
                     //Set second button visible and disabled it
                     ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
                     ((JButton) e.getSource()).setEnabled(false);
+                    firstCardkey = "";
+                    firstTouchedButton = null;
+                    secondTouchedButton = null;
                 } //Else if the first and second buttons aren't same
                 else {
 
-//NON FO            //Set visible button's text
-                    ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
-
-                    //Pause 2[s]
-                    try {
-                        Thread.sleep(2 * 1000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    if(firstTouchedButton != null){
+                    secondTouchedButton = e;
                     }
-
-                    //Reset button's state
-                    ((JButton) e.getSource()).setText("");
-                    ((JButton) firstTouchedButton.getSource()).setText("");
-                    ((JButton) firstTouchedButton.getSource()).setEnabled(true);
-                    firstCardkey = "";
+                    ((JButton) e.getSource()).setText(map.get(((JButton) e.getSource()).getName()));
+                    ((JButton) e.getSource()).setEnabled(false);
+                    timer.start();
+  
                 }//End else
             }//End if
         }//End actionPerformed
@@ -232,4 +256,5 @@ public class MainFrame extends javax.swing.JFrame {
     // End of variables declaration                   
     private JPanel pnlGrid;
     private JPanel pnlConf;
+    private Timer timer;
 }
