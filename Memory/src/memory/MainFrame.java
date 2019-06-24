@@ -8,6 +8,7 @@ package memory;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -24,6 +25,8 @@ import java.io.*;
 import javafx.animation.Animation;
 import javax.swing.Icon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 /**
@@ -40,6 +43,7 @@ public class MainFrame extends javax.swing.JFrame {
     ActionEvent firstTouchedButton;
     ActionEvent secondTouchedButton;
     ImageIcon imageZero = new ImageIcon(getClass().getResource("./nu.png"));
+    ImageIcon imageZeroRoll = new ImageIcon(getClass().getResource("./nuB.png"));
     /**
      * load pictures in hashmap
      *
@@ -76,11 +80,11 @@ public class MainFrame extends javax.swing.JFrame {
         int lastCard = 0;
         int rows = 4;
         int cols = 1;
-        int cardNumber = 12;
+        int cardNumber = 14;
         int vgap = 0;
         
         timer = new Timer(1000, new TimerListener());
-
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         loadPictures(cardNumber);
         GridLayout GridMemory = new GridLayout(rows, cols);
@@ -104,11 +108,19 @@ public class MainFrame extends javax.swing.JFrame {
             currentBtn.addActionListener(listener);
             currentBtn.setName(String.valueOf(i));
             currentBtn.setIcon(imageZero);
+            currentBtn.setRolloverIcon(imageZeroRoll);
+            currentBtn.setRolloverEnabled(true);
+      
             pnlGrid.add(currentBtn);
 
         }
         pnlConf.add(new JButton("Mélanger"));
-
+        ((JButton) pnlConf.getComponent(0)).addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                new MainFrame().setVisible(true);
+                dispose();
+            }
+        });
     }
 
     class TimerListener implements ActionListener{
@@ -136,9 +148,6 @@ public class MainFrame extends javax.swing.JFrame {
         //Check if it have 2 button clicked    
         if(secondTouchedButton == null){
             timer.stop();
-            
-            //Display pressed button's name in output console
-            System.out.println(((JButton) e.getSource()).getName());
 
             // if the pressed button is the first one then:
             if (firstCardkey == "") {
@@ -180,13 +189,39 @@ public class MainFrame extends javax.swing.JFrame {
                     
                     ImageIcon temp= new ImageIcon(getClass().getResource(map.get(((JButton) e.getSource()).getName())));
                     ((JButton) e.getSource()).setDisabledIcon(temp);
+                    
+                    
+                    
+                    
                     ((JButton) e.getSource()).setEnabled(false);
+                    
+                    
+                    
                     timer.start();
   
                 }//End else
+                boolean checkFinish = true;
+                    for(int i = 0; i < pnlGrid.getComponentCount(); i++){  
+                        if(((JButton) pnlGrid.getComponent(i)).isEnabled()){
+                            checkFinish = false;
+                        }
+                    }
+                    if(checkFinish){
+                        int choice=JOptionPane.showConfirmDialog(new JFrame(),"Bien joué! Voulez-vous recommencer?");  
+                        if(choice==JOptionPane.YES_OPTION){  
+                            new MainFrame().setVisible(true);
+                            dispose();
+                        }
+                        if(choice==JOptionPane.NO_OPTION){  
+                            System.exit(0);
+                        }
+                        
+                }
             }//End if
         }
         }//End actionPerformed
+
+
     }//End btnListener
 
     /**
