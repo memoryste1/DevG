@@ -130,6 +130,7 @@ public class MainFrame extends javax.swing.JFrame {
         @Override
         @SuppressWarnings("empty-statement")
         public void actionPerformed(ActionEvent e) {
+        //Check if it have 2 button clicked    
         if(secondTouchedButton == null){
             timer.stop();
             
