@@ -9,27 +9,21 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import static java.lang.Runtime.getRuntime;
+
 import java.util.HashMap;
 import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.ImageIcon;
-import java.io.*;
-import java.text.Normalizer;
-import javafx.animation.Animation;
-import javax.swing.Icon;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
+
 
 /**
  *
@@ -43,7 +37,7 @@ public class MainFrame extends javax.swing.JFrame {
     private JPanel pnlGrid;
     private JPanel pnlConf;
     private Timer timer;
-
+    public int cardNumber = 15;
     private final ImageIcon imageZero = new ImageIcon(getClass().getResource("./nu.png"));
     private final ImageIcon imageZeroRoll = new ImageIcon(getClass().getResource("./nuB.png"));
 
@@ -60,21 +54,21 @@ public class MainFrame extends javax.swing.JFrame {
      *
      * @author Théo
      */
-    public void loadPictures(int numberOfCard) {
+    public void loadPictures() {
 
         Random rand = new Random();
         boolean flag = false;
         int n = 0;
 
-        int startCard = rand.nextInt(31 - numberOfCard);
+        int startCard = rand.nextInt(31 - cardNumber);
 
-        for (int i = 0; i < numberOfCard; i++) {
+        for (int i = 0; i < cardNumber; i++) {
             for (int j = 0; j < 2; j++) {
                 do {
                     flag = true;
 
                     // Obtain a number between [0 - numberOfCard-1 ].
-                    n = rand.nextInt(numberOfCard * 2);
+                    n = rand.nextInt(cardNumber * 2);
                     boolean m = map.containsKey(String.valueOf(n));
                     if (map.containsKey(String.valueOf(n))) {
                         flag = false;
@@ -92,8 +86,13 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     public MainFrame() {
+       DialogConfig test = new DialogConfig(this, true);
+       test.setVisible(true);
+       cardNumber = test.getCardSlider().getValue();
+       test.dispose();
+        
         int lastCard = 0;
-        int cardNumber = 5;
+        
 
         int rows = 2;
         for (int i = 3; i <= (int) Math.sqrt(cardNumber * 2); i++) {
@@ -109,9 +108,9 @@ public class MainFrame extends javax.swing.JFrame {
         timer = new Timer(600, new TimerListener());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
-        loadPictures(cardNumber);
+        loadPictures();
         GridLayout GridMemory = new GridLayout(rows, cols);
-        this.setMinimumSize(new Dimension((rows * 90), (cardNumber * 2 / rows) * 100));
+        this.setMinimumSize(new Dimension((cardNumber * 2 / rows) * 100,(rows * 160)));
 
         pnlGrid = new JPanel();
         pnlConf = new JPanel();
@@ -120,7 +119,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.add(pnlGrid, BorderLayout.CENTER);
 
         //Dimentionnement du plateau de jeu
-        this.setBounds(100, 100, (rows * 90),(cardNumber * 2 / rows) * 100);
+        this.setBounds(100, 100, (cardNumber * 2 / rows) * 100,(rows * 160) );
         pnlGrid.setLayout(GridMemory);
 
         //this.setContentPane(pnlMemory);
@@ -153,7 +152,8 @@ public class MainFrame extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-
+            
+            timer.stop();
             ((JButton) secondTouchedButton.getSource()).setIcon(imageZero);
             ((JButton) firstTouchedButton.getSource()).setIcon(imageZero);
             ((JButton) firstTouchedButton.getSource()).setEnabled(true);
@@ -173,7 +173,7 @@ public class MainFrame extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e) {
             //Check if it have 2 button clicked    
             if (secondTouchedButton == null) {
-                timer.stop();
+                
 
                 // if the pressed button is the first one then:
                 if (firstCardkey == "") {
@@ -235,8 +235,8 @@ public class MainFrame extends javax.swing.JFrame {
                             dispose();
                         }
                         if (choice == JOptionPane.NO_OPTION) {
-                            System.out.println(getParent().getClass());
-                            System.exit(0);
+                           
+                           System.exit(0);
                             
                         }
 
@@ -247,6 +247,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     }//End btnListener
 
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
